@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UAE MVP Estimation — Global Football Players Network</title>
+    <style>
+      :root {
+        --bg: #0b1320;
+        --card: #0f1b2e;
+        --ink: #e9eef7;
+        --ink-dim: #b7c4d6;
+        --accent: #2bd48f;
+        --muted: #1a2841;
+      }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: linear-gradient(180deg, var(--bg), #0a1528 45%, #091121);
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      .wrap { max-width: 1060px; margin: 0 auto; padding: 56px 20px 80px; }
+      .hero {
+        display: grid; gap: 10px; margin-bottom: 26px;
+      }
+      .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #132547; color: #bfe1ff; font-size: 12px; letter-spacing: .3px; }
+      h1 { margin: 4px 0 12px; font-size: 28px; }
+      h2 { font-size: 20px; margin: 28px 0 10px; }
+      p { color: var(--ink-dim); margin: 0 0 10px; }
+      .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+      .card { background: linear-gradient(180deg, var(--card), #0d1728); border: 1px solid #172645; border-radius: 14px; padding: 16px; }
+      .list { margin: 8px 0 0 0; padding-left: 18px; color: var(--ink-dim); }
+      .list li { margin: 6px 0; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .price { font-weight: 700; color: var(--accent); font-size: 20px; }
+      .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #0e203e; border: 1px solid #1a2f59; color: #cfe3ff; font-size: 12px; margin-right: 6px; }
+      .muted { color: #8ea2bd; }
+      .table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      .table th, .table td { border-bottom: 1px dashed #243a67; padding: 10px 8px; vertical-align: top; }
+      .table th { text-align: left; color: #c8d9f2; font-weight: 600; }
+      .table td:last-child, .table th:last-child { text-align: right; white-space: nowrap; }
+      .totals { font-weight: 700; color: var(--ink); }
+      .accent-box { border-left: 3px solid var(--accent); padding: 10px 12px; background: #0b1f30; border-radius: 10px; }
+      .small { font-size: 12px; }
+      .arabic { direction: rtl; text-align: right; }
+      .cta { display: inline-block; padding: 10px 14px; background: var(--accent); color: #062416; text-decoration: none; border-radius: 10px; font-weight: 700; }
+      .toolbar { position: sticky; top: 0; display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding: 10px 0; background: linear-gradient(180deg, rgba(11,19,32,.95), rgba(11,19,32,.75)); backdrop-filter: blur(6px); z-index: 10; }
+      .lang-btn { border: 1px solid #27406d; background: #0f1b2e; color: #cfe3ff; padding: 6px 10px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 12px; }
+      .lang-btn[aria-pressed="true"] { background: #1a2f59; color: #fff; }
+      .rtl .card, .rtl p, .rtl li, .rtl h1, .rtl h2 { text-align: right; }
+      .rtl .table td:last-child, .rtl .table th:last-child { text-align: left; }
+      .rtl .badge { direction: rtl; }
+      @media print {
+        body { background: #fff; color: #000; }
+        .card { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #fff; border-color: #ddd; }
+        .badge, .tag { color: #000; background: #f4f7fb; border-color: #e6ecf5; }
+        .price { color: #000; }
+        a.cta { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <div class="toolbar">
+        <button class="lang-btn" id="btn-en" aria-pressed="true">EN</button>
+        <button class="lang-btn" id="btn-ar" aria-pressed="false">AR</button>
+      </div>
+
+      <div class="hero">
+        <span class="badge" data-i18n="badge">UAE Market Estimation • Currency: AED</span>
+        <h1 data-i18n="title">Estimation — Global Football Players Network (Android + iOS + Web)</h1>
+        <p class="muted" data-i18n="hero_desc">Lean UAE-market baseline pricing for an MVP focused on video profiles of football players, simple discovery and contact via phone only, with monthly subscription and automated data deletion.</p>
+        <div class="small muted" id="summary-block" data-i18n="summary_block"></div>
+      </div>
+
+      <section class="grid">
+        <div class="card">
+          <h2 data-i18n="scope_title">Scope (MVP)</h2>
+          <ul class="list">
+            <li data-i18n="scope_1">Platforms: Web + Mobile (Android & iOS, single codebase).</li>
+            <li data-i18n="scope_2">User roles: Player, Admin/Moderator; sections by gender (Men / Women).</li>
+            <li data-i18n="scope_3">Registration (required): name, email, phone, full address (country/region/city...), birth year.</li>
+            <li data-i18n="scope_4">Profiles: phone visible; no likes, no comments, no shares.</li>
+            <li data-i18n="scope_5">Video: player-only clips, no music policy; basic moderation + violation auto-ban.</li>
+            <li data-i18n="scope_6">Discovery flow: Continents → Country flags → Birth year → Player list.</li>
+            <li data-i18n="scope_7">Filters: by birth year, country, and gender.</li>
+            <li data-i18n="scope_8">Subscription: 1 month access; auto-delete all user data at expiry.</li>
+            <li data-i18n="scope_9">Payments: AED pricing; Stripe/Checkout.com with cards + Apple Pay/Google Pay (where available).</li>
+            <li data-i18n="scope_10">Language: English (primary). UI kept minimal and fast.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="arch_title">Architecture (lean)</h2>
+          <ul class="list">
+            <li data-i18n="arch_1">Mobile: Flutter for Android/iOS (single codebase, faster delivery).</li>
+            <li data-i18n="arch_2">Web: React/Next.js minimal client (same API).</li>
+            <li data-i18n="arch_3">Backend: Node.js (Nest/Fastify) or Django; PostgreSQL for relational data.</li>
+            <li data-i18n="arch_4">Media: Cloudflare Stream/Mux for upload, transcode, delivery (low OPEX).</li>
+            <li data-i18n="arch_5">Auth: email/phone + OTP; rate limits and basic fraud checks.</li>
+            <li data-i18n="arch_6">Admin: lightweight moderation queue + audit logs.</li>
+            <li data-i18n="arch_7">Compliance: scheduled job to purge accounts exactly on subscription end date.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="sub_title">Subscription Price (User)</h2>
+          <p class="accent-box" data-i18n="sub_text">
+            USD 10.00 ≈ AED 36.75 (peg 3.675). Recommended in-app price: <span class="price">AED 37 / month</span> (excl. VAT). If VAT applies (5%), user-facing price ≈ AED 38.85.
+          </p>
+          <p class="small muted" data-i18n="sub_note">Gateway fees (typical UAE): ~2.75%–2.9% + AED 1 per charge.</p>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 14px;">
+        <h2 data-i18n="build_title">One-time Build (MVP)</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th data-i18n="tbl_deliverable">Deliverable</th>
+              <th class="muted" data-i18n="tbl_details">Details</th>
+              <th data-i18n="tbl_price">Price (AED)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="row_discovery">Product discovery + specs</td>
+              <td class="muted" data-i18n="row_discovery_desc">Clarify flows, wireframes, acceptance criteria</td>
+              <td>2,000</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_ux">UX/UI (core screens)</td>
+              <td class="muted" data-i18n="row_ux_desc">Auth, profile, upload, discovery, pay, admin</td>
+              <td>4,500</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_backend">Backend/API + DB</td>
+              <td class="muted" data-i18n="row_backend_desc">Users, profiles, search, subscriptions, purging job</td>
+              <td>14,000</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_web">Web app</td>
+              <td class="muted" data-i18n="row_web_desc">Responsive client incl. filters and flow</td>
+              <td>6,500</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_mobile">Mobile apps (Flutter)</td>
+              <td class="muted" data-i18n="row_mobile_desc">Android & iOS builds + store setup</td>
+              <td>9,500</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_admin">Admin panel + moderation</td>
+              <td class="muted" data-i18n="row_admin_desc">Queue, ban, takedowns, logs</td>
+              <td>5,500</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_video">Video pipeline integration</td>
+              <td class="muted" data-i18n="row_video_desc">Upload, transcode, thumbnail, playback</td>
+              <td>4,500</td>
+            </tr>
+            <tr>
+              <td data-i18n="row_qa">QA, testing, releases</td>
+              <td class="muted" data-i18n="row_qa_desc">Test plans, fixes, store submissions</td>
+              <td>3,000</td>
+            </tr>
+            <tr>
+              <td class="totals" data-i18n="row_subtotal">Subtotal (MVP)</td>
+              <td></td>
+              <td class="totals">AED 49,500</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="small muted" style="margin-top:8px;" data-i18n="build_note">This is a lean, lowest-cost UAE-market baseline for comparable scope. Exact cost may adjust ±5–10% after final specs.</p>
+      </section>
+
+      <section class="grid" style="margin-top: 14px;">
+        <div class="card">
+          <h2 data-i18n="timeline_title">Delivery Timeline</h2>
+          <ul class="list">
+            <li data-i18n="tl_1">Week 1: Discovery, wireframes, tech setup.</li>
+            <li data-i18n="tl_2">Weeks 2–3: Backend/API + DB, auth, payments.</li>
+            <li data-i18n="tl_3">Weeks 3–4: Web client (discovery + filters).</li>
+            <li data-i18n="tl_4">Weeks 4–6: Flutter apps (Android/iOS), media integration.</li>
+            <li data-i18n="tl_5">Week 7: Admin + moderation, purge automation.</li>
+            <li data-i18n="tl_6">Week 8: QA, polish, store submissions, launch.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="opex_title">Monthly OPEX (estimate)</h2>
+          <ul class="list">
+            <li data-i18n="op_1">Hosting + DB: ~AED 250–450/month (starter cluster).</li>
+            <li data-i18n="op_2">Video storage/streaming: usage-based; e.g., 1,000 videos (~30 GB) + 5,000 min streaming ≈ AED 120–220/month.</li>
+            <li data-i18n="op_3">SMS OTP: ~AED 0.15–0.40 per SMS; 1,000 OTPs ≈ AED 150–400.</li>
+            <li data-i18n="op_4">Gateway fees: ~2.75%–2.9% + AED 1 per successful charge.</li>
+            <li data-i18n="op_5">Apple Dev (yearly): ~AED 365; Google Play (one-time): ~AED 92.</li>
+            <li data-i18n="op_6">Domain + email: ~AED 10–40/month (basic).</li>
+          </ul>
+          <p class="small muted" data-i18n="opex_note">Actual media costs depend on uploaded minutes, bitrates, and regional traffic; figures are conservative for a lean MVP.</p>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="policy_title">Policies & Compliance</h2>
+          <ul class="list">
+            <li data-i18n="pol_1">Content: player-only videos, no music; violations → auto account deletion.</li>
+            <li data-i18n="pol_2">Privacy: delete all user data exactly at subscription end; logs redact PII.</li>
+            <li data-i18n="pol_3">Safety: gender separation in listing; report/ban tools for admins.</li>
+            <li data-i18n="pol_4">Payments: AED-first pricing; FX handled by gateway if needed.</li>
+            <li data-i18n="pol_5">Data export: user can download profile before deletion (optional).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="grid" style="margin-top: 14px;">
+        <div class="card">
+          <h2 data-i18n="opt_title">Optional Cost Reductions</h2>
+          <ul class="list">
+            <li data-i18n="opt_1"><span class="tag">Starter</span> Web + Android first, iOS later → <strong>AED 34,900</strong>.</li>
+            <li data-i18n="opt_2"><span class="tag">Media</span> Limit upload length/bitrate to cap OPEX.</li>
+            <li data-i18n="opt_3"><span class="tag">Moderation</span> Manual review v1; automate later.</li>
+            <li data-i18n="opt_4"><span class="tag">Payments</span> AED 37/month flat; yearly plan discount optional.</li>
+          </ul>
+          <p class="small muted" data-i18n="opt_note">Starter excludes iOS store launch; can be added later for ~AED 12k–15k.</p>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="get_title">What You Get</h2>
+          <ul class="list">
+            <li data-i18n="get_1">Source code (backend, web, Flutter apps) and infra-as-code basics.</li>
+            <li data-i18n="get_2">Admin access, moderation tools, and purge automation.</li>
+            <li data-i18n="get_3">Payment setup with AED pricing and receipts.</li>
+            <li data-i18n="get_4">Deployment guide + handover session.</li>
+          </ul>
+          <a class="cta" href="#confirm" data-i18n="cta">Proceed with AED 49,500 MVP</a>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 14px;">
+        <h2 data-i18n="notes_title">Notes</h2>
+        <div id="notes-block"></div>
+      </section>
+
+      <p class="small muted" style="margin-top: 16px;" data-i18n="footer_note">Prepared for UAE market. All prices in AED. This is a non-binding estimate intended as the lowest practical baseline for the requested scope.</p>
+    </main>
+    <script>
+      const t = {
+        en: {
+          badge: 'UAE Market Estimation • Currency: AED',
+          title: 'Estimation — Global Football Players Network (Android + iOS + Web)',
+          hero_desc: 'Lean UAE-market baseline pricing for an MVP focused on video profiles of football players, simple discovery and contact via phone only, with monthly subscription and automated data deletion.',
+          summary_block: '<strong>Summary:</strong> A football-only network without likes/comments/shares. Contact via phone number only. Separate sections for men and women. Players upload only their own videos (no music). Registration requires name, email, phone, full address, and birth year. Discovery: Continents → Countries (flags) → Birth year → Players. Monthly subscription is USD 10 (≈ AED 36.75); user data is deleted exactly on expiry.',
+
+          scope_title: 'Scope (MVP)',
+          scope_1: 'Platforms: Web + Mobile (Android & iOS, single codebase).',
+          scope_2: 'User roles: Player, Admin/Moderator; sections by gender (Men / Women).',
+          scope_3: 'Registration (required): name, email, phone, full address (country/region/city...), birth year.',
+          scope_4: 'Profiles: phone visible; no likes, no comments, no shares.',
+          scope_5: 'Video: player-only clips, no music policy; basic moderation + violation auto-ban.',
+          scope_6: 'Discovery flow: Continents → Country flags → Birth year → Player list.',
+          scope_7: 'Filters: by birth year, country, and gender.',
+          scope_8: 'Subscription: 1 month access; auto-delete all user data at expiry.',
+          scope_9: 'Payments: AED pricing; Stripe/Checkout.com with cards + Apple Pay/Google Pay (where available).',
+          scope_10: 'Language: English (primary). UI kept minimal and fast.',
+
+          arch_title: 'Architecture (lean)',
+          arch_1: 'Mobile: Flutter for Android/iOS (single codebase, faster delivery).',
+          arch_2: 'Web: React/Next.js minimal client (same API).',
+          arch_3: 'Backend: Node.js (Nest/Fastify) or Django; PostgreSQL for relational data.',
+          arch_4: 'Media: Cloudflare Stream/Mux for upload, transcode, delivery (low OPEX).',
+          arch_5: 'Auth: email/phone + OTP; rate limits and basic fraud checks.',
+          arch_6: 'Admin: lightweight moderation queue + audit logs.',
+          arch_7: 'Compliance: scheduled job to purge accounts exactly on subscription end date.',
+
+          sub_title: 'Subscription Price (User)',
+          sub_text: 'USD 10.00 ≈ AED 36.75 (peg 3.675). Recommended in-app price: <span class="price">AED 37 / month</span> (excl. VAT). If VAT applies (5%), user-facing price ≈ AED 38.85.',
+          sub_note: 'Gateway fees (typical UAE): ~2.75%–2.9% + AED\u00A01 per charge.',
+
+          build_title: 'One-time Build (MVP)',
+          tbl_deliverable: 'Deliverable',
+          tbl_details: 'Details',
+          tbl_price: 'Price (AED)',
+          row_discovery: 'Product discovery + specs',
+          row_discovery_desc: 'Clarify flows, wireframes, acceptance criteria',
+          row_ux: 'UX/UI (core screens)',
+          row_ux_desc: 'Auth, profile, upload, discovery, pay, admin',
+          row_backend: 'Backend/API + DB',
+          row_backend_desc: 'Users, profiles, search, subscriptions, purging job',
+          row_web: 'Web app',
+          row_web_desc: 'Responsive client incl. filters and flow',
+          row_mobile: 'Mobile apps (Flutter)',
+          row_mobile_desc: 'Android & iOS builds + store setup',
+          row_admin: 'Admin panel + moderation',
+          row_admin_desc: 'Queue, ban, takedowns, logs',
+          row_video: 'Video pipeline integration',
+          row_video_desc: 'Upload, transcode, thumbnail, playback',
+          row_qa: 'QA, testing, releases',
+          row_qa_desc: 'Test plans, fixes, store submissions',
+          row_subtotal: 'Subtotal (MVP)',
+          build_note: 'This is a lean, lowest-cost UAE-market baseline for comparable scope. Exact cost may adjust ±5–10% after final specs.',
+
+          timeline_title: 'Delivery Timeline',
+          tl_1: 'Week 1: Discovery, wireframes, tech setup.',
+          tl_2: 'Weeks 2–3: Backend/API + DB, auth, payments.',
+          tl_3: 'Weeks 3–4: Web client (discovery + filters).',
+          tl_4: 'Weeks 4–6: Flutter apps (Android/iOS), media integration.',
+          tl_5: 'Week 7: Admin + moderation, purge automation.',
+          tl_6: 'Week 8: QA, polish, store submissions, launch.',
+
+          opex_title: 'Monthly OPEX (estimate)',
+          op_1: 'Hosting + DB: ~AED 250–450/month (starter cluster).',
+          op_2: 'Video storage/streaming: usage-based; e.g., 1,000 videos (~30 GB) + 5,000 min streaming ≈ AED 120–220/month.',
+          op_3: 'SMS OTP: ~AED 0.15–0.40 per SMS; 1,000 OTPs ≈ AED 150–400.',
+          op_4: 'Gateway fees: ~2.75%–2.9% + AED 1 per successful charge.',
+          op_5: 'Apple Dev (yearly): ~AED 365; Google Play (one-time): ~AED 92.',
+          op_6: 'Domain + email: ~AED 10–40/month (basic).',
+          opex_note: 'Actual media costs depend on uploaded minutes, bitrates, and regional traffic; figures are conservative for a lean MVP.',
+
+          policy_title: 'Policies & Compliance',
+          pol_1: 'Content: player-only videos, no music; violations → auto account deletion.',
+          pol_2: 'Privacy: delete all user data exactly at subscription end; logs redact PII.',
+          pol_3: 'Safety: gender separation in listing; report/ban tools for admins.',
+          pol_4: 'Payments: AED-first pricing; FX handled by gateway if needed.',
+          pol_5: 'Data export: user can download profile before deletion (optional).',
+
+          opt_title: 'Optional Cost Reductions',
+          opt_1: '<span class="tag">Starter</span> Web + Android first, iOS later → <strong>AED 34,900</strong>.',
+          opt_2: '<span class="tag">Media</span> Limit upload length/bitrate to cap OPEX.',
+          opt_3: '<span class="tag">Moderation</span> Manual review v1; automate later.',
+          opt_4: '<span class="tag">Payments</span> AED 37/month flat; yearly plan discount optional.',
+          opt_note: 'Starter excludes iOS store launch; can be added later for ~AED 12k–15k.',
+
+          get_title: 'What You Get',
+          get_1: 'Source code (backend, web, Flutter apps) and infra-as-code basics.',
+          get_2: 'Admin access, moderation tools, and purge automation.',
+          get_3: 'Payment setup with AED pricing and receipts.',
+          get_4: 'Deployment guide + handover session.',
+          cta: 'Proceed with AED 49,500 MVP',
+
+          notes_title: 'Notes',
+          notes_block: '<p>• Registration requires: name, email, phone, full address, and birth year.</p>\n<p>• Search flow: Continents → Countries (with flags) → Birth year → Players.</p>\n<p>• No likes, comments, or shares; contact via player phone number only.</p>\n<p>• Monthly subscription: USD 10 ≈ AED 36.75 (recommend AED 37). On expiry, all user data is deleted automatically on the same date.</p>\n<p>• Simplicity of UX and payments is a priority.</p>',
+
+          footer_note: 'Prepared for UAE market. All prices in AED. This is a non-binding estimate intended as the lowest practical baseline for the requested scope.'
+        },
+        ar: {
+          badge: 'تقدير السوق في الإمارات • العملة: درهم',
+          title: 'تقدير التكلفة — شبكة اللاعبين العالميين لكرة القدم (أندرويد + iOS + الويب)',
+          hero_desc: 'تسعير أساسي للسوق الإماراتي لنسخة MVP تركز على ملفات فيديو للاعبين، واكتشاف بسيط والتواصل عبر الهاتف فقط، مع اشتراك شهري وحذف تلقائي للبيانات.',
+          summary_block: '<strong>ملخص:</strong> شبكة خاصة بلاعبي كرة القدم بدون لايك/تعليق/مشاركة. التواصل عبر رقم الهاتف فقط. أقسام منفصلة للرجال والنساء. يرفع اللاعب فيديوهاته فقط (بدون موسيقى). التسجيل إلزامي بالاسم والبريد والهاتف والعنوان الكامل وسنة الميلاد. الاكتشاف: القارات → الدول (مع الأعلام) → سنة الميلاد → اللاعبين. الاشتراك الشهري 10 دولارات (≈ ‎AED\u00A036.75‎) مع حذف كامل البيانات فور انتهاء الاشتراك.',
+
+          scope_title: 'نطاق العمل (MVP)',
+          scope_1: 'المنصات: الويب + الجوال (أندرويد و iOS بكود واحد).',
+          scope_2: 'الأدوار: لاعب، مشرف/مدير؛ أقسام بحسب الجنس (رجال / نساء).',
+          scope_3: 'التسجيل (إلزامي): الاسم، البريد الإلكتروني، الهاتف، العنوان الكامل (بلد/منطقة/مدينة...)، سنة الميلاد.',
+          scope_4: 'الملفات: إظهار رقم الهاتف؛ لا يوجد إعجابات أو تعليقات أو مشاركة.',
+          scope_5: 'الفيديو: مقاطع للاعب فقط وبدون موسيقى؛ إيقاف تلقائي عند المخالفة.',
+          scope_6: 'مسار الاكتشاف: القارات → أعلام الدول → سنة الميلاد → قائمة اللاعبين.',
+          scope_7: 'الفرز/الترشيح: حسب سنة الميلاد والبلد والجنس.',
+          scope_8: 'الاشتراك: صلاحية شهر واحد؛ حذف تلقائي لكل بيانات المستخدم عند الانتهاء.',
+          scope_9: 'المدفوعات: أسعار بالدرهم؛ Stripe/Checkout.com وبطاقات + Apple Pay/Google Pay (حيثما متاح).',
+          scope_10: 'اللغة: الإنجليزية (رئيسية). واجهة بسيطة وسريعة.',
+
+          arch_title: 'الهيكلية (خفيفة)',
+          arch_1: 'الجوال: Flutter لأندرويد و iOS (كود واحد وتسليم أسرع).',
+          arch_2: 'الويب: React/Next.js عميل خفيف (نفس الواجهة البرمجية).',
+          arch_3: 'الخلفية: Node.js (Nest/Fastify) أو Django؛ PostgreSQL للبيانات العلائقية.',
+          arch_4: 'الوسائط: Cloudflare Stream/Mux للرفع والتحويل والبث (تكلفة تشغيل منخفضة).',
+          arch_5: 'الدخول: بريد/هاتف + رمز OTP؛ حدود طلبات وفحص احتيال أساسي.',
+          arch_6: 'الإدارة: قائمة مراجعة محتوى خفيفة + سجلات تدقيق.',
+          arch_7: 'الامتثال: مهمة مجدولة لمسح الحسابات في تاريخ انتهاء الاشتراك بالضبط.',
+
+          sub_title: 'سعر الاشتراك (للمستخدم)',
+          sub_text: '10 دولارات أمريكية ≈ ‎AED\u00A036.75‎ (سعر الربط 3.675). السعر المقترح داخل التطبيق: <span class="price">AED 37 / شهريًا</span> (بدون ضريبة). في حال تطبيق الضريبة (5%) يصبح السعر الظاهر ≈ AED 38.85.',
+          sub_note: 'رسوم بوابة الدفع (المعتاد في الإمارات): حوالي 2.75%–2.9% + 1 درهم لكل عملية ناجحة.',
+
+          build_title: 'تكلفة البناء مرة واحدة (MVP)',
+          tbl_deliverable: 'المخرج',
+          tbl_details: 'التفاصيل',
+          tbl_price: 'السعر (درهم)',
+          row_discovery: 'اكتشاف المنتج + المواصفات',
+          row_discovery_desc: 'توضيح المسارات، الإطارات الحاسوبية، معايير القبول',
+          row_ux: 'التجربة والواجهة (الشاشات الأساسية)',
+          row_ux_desc: 'الدخول، الملف، الرفع، الاستكشاف، الدفع، الإدارة',
+          row_backend: 'الخلفية/الواجهات البرمجية + قاعدة البيانات',
+          row_backend_desc: 'المستخدمون، الملفات، البحث، الاشتراكات، مهمة المسح',
+          row_web: 'تطبيق الويب',
+          row_web_desc: 'واجهة متجاوبة تتضمن المرشحات والمسار',
+          row_mobile: 'تطبيقات الجوال (Flutter)',
+          row_mobile_desc: 'بناء أندرويد و iOS + تهيئة المتاجر',
+          row_admin: 'لوحة الإدارة + الإشراف',
+          row_admin_desc: 'قائمة مراجعة، حظر، حذف مقاطع، سجلات',
+          row_video: 'تكامل خط معالجة الفيديو',
+          row_video_desc: 'رفع، تحويل، صورة مصغرة، تشغيل',
+          row_qa: 'الاختبارات والإصدارات',
+          row_qa_desc: 'خطط اختبار، إصلاحات، رفع للمتاجر',
+          row_subtotal: 'الإجمالي الفرعي (MVP)',
+          build_note: 'هذا تقدير أساسي ومنخفض التكلفة لذات النطاق في السوق الإماراتي. قد يتغير نهائيًا ±5–10% بعد تثبيت المواصفات.',
+
+          timeline_title: 'الجدول الزمني للتسليم',
+          tl_1: 'الأسبوع 1: الاكتشاف، الإطارات الحاسوبية، الإعداد التقني.',
+          tl_2: 'الأسبوع 2–3: الخلفية/الواجهات + قاعدة البيانات، الدخول، الدفع.',
+          tl_3: 'الأسبوع 3–4: واجهة الويب (الاكتشاف + المرشحات).',
+          tl_4: 'الأسبوع 4–6: تطبيقات Flutter (أندرويد/iOS)، تكامل الوسائط.',
+          tl_5: 'الأسبوع 7: الإدارة + الإشراف، أتمتة المسح.',
+          tl_6: 'الأسبوع 8: ضمان الجودة، تحسينات، رفع للمتاجر، الإطلاق.',
+
+          opex_title: 'التكاليف التشغيلية الشهرية (تقديري)',
+          op_1: 'الاستضافة + قاعدة البيانات: ~AED 250–450/شهريًا (خطة بداية).',
+          op_2: 'تخزين/بث الفيديو: حسب الاستخدام؛ مثال 1000 فيديو (~30GB) + 5000 دقيقة بث ≈ AED 120–220/شهر.',
+          op_3: 'رسائل OTP: نحو AED 0.15–0.40 للرسالة؛ 1000 رسالة ≈ AED 150–400.',
+          op_4: 'رسوم البوابة: ~2.75%–2.9% + 1 درهم لكل عملية ناجحة.',
+          op_5: 'حساب مطور آبل (سنوي): ~AED 365؛ جوجل بلاي (مرة واحدة): ~AED 92.',
+          op_6: 'النطاق + البريد: ~AED 10–40/شهر (أساسي).',
+          opex_note: 'تعتمد تكلفة الوسائط على عدد الدقائق المرفوعة ومعدلات البث وحركة المرور؛ الأرقام محافظة لنسخة MVP.',
+
+          policy_title: 'السياسات والامتثال',
+          pol_1: 'المحتوى: فيديوهات للاعب فقط وبدون موسيقى؛ المخالفات → حذف تلقائي للحساب.',
+          pol_2: 'الخصوصية: حذف جميع بيانات المستخدم عند نهاية الاشتراك؛ إخفاء البيانات الشخصية في السجلات.',
+          pol_3: 'السلامة: فصل القوائم حسب الجنس؛ أدوات إبلاغ/حظر للمشرفين.',
+          pol_4: 'المدفوعات: التسعير بالدرهم أولًا؛ التحويل عبر البوابة إذا لزم.',
+          pol_5: 'تصدير البيانات: يمكن للمستخدم تنزيل ملفه قبل الحذف (اختياري).',
+
+          opt_title: 'خيارات خفض التكلفة',
+          opt_1: '<span class="tag">بَدْئي</span> الويب + أندرويد أولًا، iOS لاحقًا → <strong>34,900 درهم</strong>.',
+          opt_2: '<span class="tag">الوسائط</span> تحديد مدة/جودة الرفع لضبط التكلفة.',
+          opt_3: '<span class="tag">الإشراف</span> مراجعة يدوية في النسخة الأولى؛ الأتمتة لاحقًا.',
+          opt_4: '<span class="tag">المدفوعات</span> 37 درهم/شهر سعر موحد؛ خصم الخطة السنوية اختياري.',
+          opt_note: 'الخطة البدئية لا تشمل إطلاق متجر iOS؛ يمكن إضافتها لاحقًا مقابل ~12k–15k درهم.',
+
+          get_title: 'ما الذي ستحصل عليه',
+          get_1: 'الكود المصدري (الخلفية، الويب، تطبيقات Flutter) وأساسيات البنية ككود.',
+          get_2: 'صلاحيات الإدارة، أدوات الإشراف، وأتمتة المسح.',
+          get_3: 'تهيئة الدفع بالدرهم مع الإيصالات.',
+          get_4: 'دليل النشر + جلسة تسليم.',
+          cta: 'المتابعة بقيمة 49,500 درهم للـ MVP',
+
+          notes_title: 'ملاحظات',
+          notes_block: '<p>• يتم التسجيل فقط عبر: الاسم، البريد الإلكتروني، رقم الهاتف، العنوان الكامل، سنة الميلاد.</p>\n<p>• البحث: القارات ← الدول (مع الأعلام) ← سنة الميلاد ← اللاعبين.</p>\n<p>• لا يوجد إعجابات أو تعليقات أو مشاركة؛ التواصل عبر رقم اللاعب فقط.</p>\n<p>• الاشتراك الشهري: 10 دولارات ≈ ‎AED\u00A036.75‎ (نوصي بـ AED 37). عند انتهاء الاشتراك يتم حذف جميع بيانات المستخدم في نفس التاريخ تلقائيًا.</p>\n<p>• سهولة وبساطة الاستخدام والدفع ضمن الأولويات.</p>',
+
+          footer_note: 'أُعدّ للسوق الإماراتي. جميع الأسعار بالدرهم. هذا تقدير غير ملزم يمثل الحد الأدنى العملي للنطاق المطلوب.'
+        }
+      };
+
+      function setLang(lang) {
+        document.documentElement.lang = lang;
+        const rtl = lang === 'ar';
+        document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+        document.body.classList.toggle('rtl', rtl);
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          const val = t[lang][key];
+          if (typeof val === 'string') el.innerHTML = val;
+        });
+        // Notes block that contains multiple paragraphs
+        const notes = document.getElementById('notes-block');
+        if (notes) notes.innerHTML = t[lang].notes_block;
+        // Toggle button states
+        const be = document.getElementById('btn-en');
+        const ba = document.getElementById('btn-ar');
+        if (be && ba) {
+          be.setAttribute('aria-pressed', String(lang === 'en'));
+          ba.setAttribute('aria-pressed', String(lang === 'ar'));
+        }
+        // Persist
+        try { localStorage.setItem('lang', lang); } catch (e) {}
+      }
+
+      document.getElementById('btn-en')?.addEventListener('click', () => setLang('en'));
+      document.getElementById('btn-ar')?.addEventListener('click', () => setLang('ar'));
+
+      // Initialize
+      const saved = (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })();
+      setLang(saved === 'ar' ? 'ar' : 'en');
+    </script>
+  </body>
+  </html>
